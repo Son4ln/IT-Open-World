@@ -74,6 +74,16 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "itopw_admin.users.apps.UsersConfig",
+    "itopw_admin.posts.apps.PostsConfig",
+    "itopw_admin.post_files.apps.PostFilesConfig",
+    "itopw_admin.comments.apps.CommentsConfig",
+    "itopw_admin.categories.apps.CategoriesConfig",
+    "itopw_admin.post_stars.apps.PostStarsConfig",
+    "itopw_admin.save_posts.apps.SavePostsConfig",
+    "itopw_admin.series.apps.SeriesConfig",
+    "itopw_admin.notification.apps.NotificationConfig",
+    "itopw_admin.actions_history.apps.ActionsHistoryConfig",
+    "itopw_admin.post_reports.apps.PostReportsConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -103,10 +113,10 @@ LOGIN_URL = "account_login"
 # https://docs.djangoproject.com/en/dev/ref/settings/#password-hashers
 PASSWORD_HASHERS = [
     # https://docs.djangoproject.com/en/dev/topics/auth/passwords/#using-argon2-with-django
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
     "django.contrib.auth.hashers.Argon2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
-    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [

@@ -14,6 +14,9 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
     path("users/", include("itopw_admin.users.urls", namespace="users")),
+    path("posts/", include("itopw_admin.posts.urls", namespace="posts")),
+    path("categories/", include("itopw_admin.categories.urls", namespace="categories")),
+    path("series/", include("itopw_admin.series.urls", namespace="series")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
