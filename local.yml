@@ -1,0 +1,118 @@
+version: '3'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  #just use for laravel api
+  nginx:
+    build:
+      context: ./itopw_nginx
+      dockerfile: ./local/Dockerfile
+    ports:
+      - 8081:80
+    links:
+      - api
+
+  django: &django
+    build:
+      context: ./itopw_admin
+      dockerfile: ./compose/local/django/Dockerfile
+    image: itopw_admin_local_django
+    depends_on:
+      - postgres
+    volumes:
+      - ./itopw_admin:/app
+    env_file:
+      - ./itopw_admin/.envs/.local/.django
+      - ./itopw_admin/.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: ./itopw_admin
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: itopw_admin_production_postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+    env_file:
+      - ./itopw_admin/.envs/.local/.postgres
+
+  api:
+    build:
+      context: ./itopw_api
+      dockerfile: ./compose/local/Dockerfile
+    image: itopw_api
+    volumes:
+      - ./itopw_api:/app
+    env_file:
+      - ./itopw_api/.env
+
+  react:
+    build:
+      context: ./itopw_fe
+      dockerfile: ./Dockerfile
+    image: itopw_react
+    volumes:
+      - ./itopw_fe:/app
+    ports:
+      - "3000:3000"
+
+  socket:
+    build:
+      context: ./itopw_socket
+      dockerfile: ./compose/local/Dockerfile
+    image: itopw_socketio
+    volumes:
+      - ./itopw_socket:/app
+    ports:
+      - "3001:3000"
+
+  minio:
+    build:
+      context: ./itopw_minio
+      dockerfile: ./compose/local/Dockerfile
+    image: itopw_minio
+    hostname: minio
+    volumes:
+      - ./itopw_minio/data:/data
+    ports:
+      - "9001:9000"
+    environment:
+      MINIO_ACCESS_KEY: AKIAIOSFODNN7EXAMPLE
+      MINIO_SECRET_KEY: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+    command: server /data
+
+  redis:
+    image: redis:5.0
+
+  celeryworker:
+    <<: *django
+    image: itopw_admin_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+      
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: itopw_admin_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+      
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: itopw_admin_local_flower
+    ports:
+      - "5555:5555"
+    command: /start-flower
