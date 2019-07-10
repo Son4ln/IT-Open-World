@@ -3,7 +3,7 @@ from django.db.models import DateTimeField, ForeignKey, Model, CASCADE
 from django.conf import settings
 
 
-class AbstractModel(Model):
+class BaseModel(Model):
     created_at = DateTimeField(auto_now_add=True, null=True)
     updated_at = DateTimeField(auto_now=True, null=True)
     creator = ForeignKey(

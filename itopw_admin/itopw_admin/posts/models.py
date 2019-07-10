@@ -1,10 +1,12 @@
 from django.db.models import CharField, ImageField, SlugField, TextField, ForeignKey, CASCADE
 from django.utils.translation import ugettext_lazy as _
-from itopw_admin.utils.models import AbstractModel
+from itopw_admin.utils.models import BaseModel
 from itopw_admin.users.models import User
+from itopw_admin.series.models import Series
+from itopw_admin.utils.soft_delete import SoftDelete
 
 
-class Post(AbstractModel):
+class Post(SoftDelete ,BaseModel):
 
     STATUS_1 = "WT"
     STATUS_2 = "AC"
@@ -29,6 +31,7 @@ class Post(AbstractModel):
     origin = CharField(_("Origin"), null=False, blank=False, max_length=500)
     status = CharField(_("Status"), null=False, max_length=3, choices=STATUS_CHOICES, default=STATUS_1)
     user = ForeignKey(User, related_name="posts", verbose_name=_("Post Owner"), on_delete=CASCADE)
+    series = ForeignKey(Series, related_name="posts", on_delete=CASCADE)
 
     def __str__(self):
         return self.title

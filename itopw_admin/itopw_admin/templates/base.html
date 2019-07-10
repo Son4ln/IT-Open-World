@@ -1205,7 +1205,15 @@ License: You must have a valid license purchased only from themeforest(the above
 												</div>
 											</a>
 											<div class="kt-notification__custom kt-space-between">
-												<a href="demo4/custom/user/login-v2.html" target="_blank" class="btn btn-label btn-label-brand btn-sm btn-bold">Sign Out</a>
+												<a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" target="_blank" class="btn btn-label btn-label-brand btn-sm btn-bold">Sign Out</a>
+
+												<form method="post" id="logout-form" class="d-none" action="{% url 'account_logout' %}">
+													{% csrf_token %}
+													{% if redirect_field_value %}
+													<input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+													{% endif %}
+												<button class="btn btn-danger" type="submit">{% trans 'Sign Out' %}</button>
+												</form>
 												<a href="demo4/custom/user/login-v2.html" target="_blank" class="btn btn-clean btn-sm btn-bold">Upgrade Plan</a>
 											</div>
 										</div>
