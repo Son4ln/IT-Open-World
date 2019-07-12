@@ -84,6 +84,7 @@ LOCAL_APPS = [
     "itopw_admin.notification.apps.NotificationConfig",
     "itopw_admin.actions_history.apps.ActionsHistoryConfig",
     "itopw_admin.post_reports.apps.PostReportsConfig",
+    "itopw_admin.dashboard.apps.DashBoardConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
