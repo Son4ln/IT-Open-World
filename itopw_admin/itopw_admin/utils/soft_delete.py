@@ -1,11 +1,11 @@
 from django.db.models import DateTimeField, Manager, Model
-from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 
 
 class SoftDeleteManager(Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted_at__isnull=True)
+
 
 class TrashManager(Manager):
     def get_queryset(self):
