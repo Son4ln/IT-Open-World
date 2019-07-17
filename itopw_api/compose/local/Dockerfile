@@ -25,11 +25,7 @@ RUN docker-php-ext-install gd
 RUN apt-get update
 RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
-COPY . /app
+COPY ./compose/local/start /start
+RUN chmod +x /start
 WORKDIR /app
-RUN chmod 775 -R storage 
-RUN chown -R $USER:www-data storage 
-RUN chmod 775 -R bootstrap/cache 
-RUN chown -R $USER:www-data bootstrap/cache
 EXPOSE 9000
-CMD bash -c "composer install; php artisan route:clear; php artisan config:clear; php artisan cache:clear; php artisan key:generate; php-fpm"
