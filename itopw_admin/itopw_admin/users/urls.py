@@ -1,5 +1,4 @@
 from django.urls import path
-
 from itopw_admin.users.views import (
     user_redirect_view,
     user_update_view,

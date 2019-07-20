@@ -9,13 +9,14 @@ urlpatterns = [
     path("", DashBoard.as_view(), name="home"),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    # User management
+    # Your stuff: custom urls includes go here
     path("users/", include("itopw_admin.users.urls", namespace="users")),
     path("posts/", include("itopw_admin.posts.urls", namespace="posts")),
     path("categories/", include("itopw_admin.categories.urls", namespace="categories")),
     path("series/", include("itopw_admin.series.urls", namespace="series")),
     path("accounts/", include("allauth.urls")),
-    # Your stuff: custom urls includes go here
+    # API: custom api urls includes go here
+    path("api/", include("itopw_admin.users.api_urls", namespace="user_api")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

@@ -16,5 +16,19 @@ class User(AbstractUser, BaseModel):
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
 
+    def deactive_verbose(self):
+        if self.is_deative:
+            return _('Deactive')
+        return _('Active')
+
+    def name_as_avatar(self):
+        """
+        get first char in name or username to create avatar
+        """
+        try:
+            return self.name[0]
+        except IndexError:
+            return self.username[0]
+
     class Meta:
         db_table = "users"
