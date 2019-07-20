@@ -3,7 +3,6 @@ from django.db.models import CharField, BooleanField
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from itopw_admin.utils.models import BaseModel
-from itopw_admin.utils.soft_delete import SoftDelete
 
 
 class User(AbstractUser, BaseModel):
