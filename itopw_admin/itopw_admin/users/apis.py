@@ -15,6 +15,10 @@ class UsersViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
     queryset = User.objects.all().order_by('id')
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        # exclude current user and super user in queryset
+        return self.queryset.filter(is_superuser=False).exclude(pk=self.request.user.id)
+
     def list(self, request, *args, **kwargs):
         """
         api to get list users and draw to datatables
@@ -30,8 +34,8 @@ class UsersViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
             self.queryset = self.queryset.order_by('-id')
 
         # count users record
-        total_record = self.queryset.count()
-        paginator = Paginator(self.queryset, request.GET.get('length', 0))
+        total_record = self.get_queryset().count()
+        paginator = Paginator(self.get_queryset(), request.GET.get('length', 0))
         paginator_list = paginator.get_page(int(request.GET.get('start', 0)) + 1)
         serializer = self.get_serializer(paginator_list, many=True)
         response = {
