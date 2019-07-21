@@ -44,12 +44,6 @@ class UsersViewSet(ListModelMixin, UpdateModelMixin, GenericViewSet):
         return response_200(response)
 
     def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        instance.is_active = request.data['is_active']
-        instance.save()
-        serializer = self.get_serializer(instance)
-        return response_200(serializer.data)
-
         if request.user.is_superuser:
             instance = self.get_object()
             instance.is_active = request.data['is_active']

@@ -24,14 +24,14 @@ def response_201(data):
 
 def response_403():
     return Response(
-        {'message': _("Permission Deny")},
+        {'detail': _("Permission Deny")},
         status=HTTP_403_FORBIDDEN
     )
 
 
 def response_404():
     return Response(
-        {'message': _("Not Found")},
+        {'detail': _("Not Found")},
         status=HTTP_404_NOT_FOUND
     )
 
@@ -45,6 +45,6 @@ def response_400(data):
 
 def response_500():
     return Response(
-        {"message": _("Server Error")},
+        {"detail": _("Server Error")},
         status=HTTP_500_INTERNAL_SERVER_ERROR
     )
