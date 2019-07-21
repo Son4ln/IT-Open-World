@@ -1,0 +1,42 @@
+{% load static i18n %}
+<script src="{% static 'vendors/general/sweetalert2/dist/sweetalert2.min.js' %}" type="text/javascript"></script>
+<script>
+  function confirmChange(fncSuccess) {
+    $(document).delegate('.confirm_change', 'click', function (e) {
+      swal.fire({
+        title: '{% trans "Are you sure?" %}',
+        text: '{% trans "Make this change" %}',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, change it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+      }).then(function (result) {
+        if (result.value) {
+          // this call back exec some ajax
+          fncSuccess(e, function() {fireSucess()});
+        } else if (result.dismiss === 'cancel') {
+          fireCancel();
+        }
+      });
+    });
+  }
+
+  function fireSucess() {
+    // this callback fire an notification
+    swal.fire(
+      'Changed!',
+      '{% trans "Your action has been taken" %}',
+      'success'
+    );
+  }
+
+  function fireCancel() {
+    swal.fire(
+      'Cancelled',
+      '{% trans "You canceled this action" %}',
+      'error'
+    )
+  }
+
+</script>

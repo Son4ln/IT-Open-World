@@ -45,8 +45,6 @@
 		<!--begin::Layout Skins(used by all pages) -->
 		<link href="{% static 'css/demo1/skins/header/base/light.css' %}" rel="stylesheet" type="text/css" />
 		<link href="{% static 'css/demo1/skins/header/menu/light.css' %}" rel="stylesheet" type="text/css" />
-		{% comment %} <link href="{% static 'css/demo1/skins/brand/dark.css' %}" rel="stylesheet" type="text/css" />
-		<link href="{% static 'css/demo1/skins/aside/dark.css' %}" rel="stylesheet" type="text/css" /> {% endcomment %}
 		{% block styles %}
 		{% endblock styles %}
 		<!--end::Layout Skins -->
@@ -146,10 +144,16 @@
 		<!--end:: Global Mandatory Vendors -->
 
 		<!--begin::Global Theme Bundle(used by all pages) -->
-		<script src="{% static 'js/demo1/scripts.bundle.js' %}" type="text/javascript"></script>
-
+		<script src="{% static 'js/demo3/scripts.bundle.js' %}" type="text/javascript"></script>
+		<script>
+			// global setup for ajax
+			$.ajaxSetup({
+				headers: {
+					'X-CSRFToken': '{{ csrf_token }}'
+				}
+			});
+		</script>
 		<!--end::Global Theme Bundle -->
-
 
 		<!--begin::Page Scripts(used by this page) -->
 		{% block scripts %}

@@ -10,16 +10,18 @@ class User(AbstractUser, BaseModel):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = CharField(_("Name of User"), blank=True, max_length=255)
-    is_deative = BooleanField(_("Is Deactive"), default=False)
     is_writter = BooleanField(_("Is Writter"), default=False)
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
 
-    def deactive_verbose(self):
-        if self.is_deative:
-            return _('Deactive')
-        return _('Active')
+    def name_verbose(self):
+        return self.name or _("Updating...")
+
+    def active_verbose(self):
+        if self.is_active:
+            return _('Active')
+        return _('Deactive')
 
     def name_as_avatar(self):
         """
