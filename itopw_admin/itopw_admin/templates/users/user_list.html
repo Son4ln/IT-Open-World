@@ -173,7 +173,11 @@
         fncFireSuccess(); // this callback fire an modal
       },
       error: (jqXHR) => {
-        fireError(jqXHR.responseJSON.detail);
+        if(jqXHR.status == 403) {
+          fireError(jqXHR.responseJSON.detail);
+          return;
+        }
+        fireError("Server Error, Please try again !!!");
       }
     });
   }
