@@ -67,7 +67,7 @@ http://localhost:8000
 
 MinIo
 ^^^^^^^^
-
+nếu minio gặp lỗi khi build. Xóa file data/.minio.sys/format.json và build lại
 http://localhost:9001
 ID và PASS trong evironment của local.yml/production.yml
 

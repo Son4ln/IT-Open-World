@@ -1,0 +1,11 @@
+#!/bin/sh
+chmod 775 -R storage 
+chown -R $USER:www-data storage 
+chmod 775 -R bootstrap/cache 
+chown -R $USER:www-data bootstrap/cache
+composer install
+php artisan route:clear
+php artisan config:clear
+php artisan cache:clear
+php artisan key:generate
+php-fpm

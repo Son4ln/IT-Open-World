@@ -53,6 +53,7 @@ services:
       - ./itopw_api:/app
     env_file:
       - ./itopw_api/.env
+    command: /start
 
   react:
     build:
