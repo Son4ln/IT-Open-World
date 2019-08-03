@@ -52,3 +52,9 @@ class ListUser(TemplateView):
         context = self.get_context_data(**kwargs)
         context['total_users'] = User.objects.all().count()
         return self.render_to_response(context)
+
+
+class UpdateUser(DetailView):
+    template_name = 'users/user.html'
+    pk_url_kwarg = 'pk'
+    queryset = User.objects.all()
