@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import DetailView, RedirectView, UpdateView, ListView
+from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView
 
 User = get_user_model()
 
@@ -42,13 +42,19 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 user_redirect_view = UserRedirectView.as_view()
 
 
-class ListUser(ListView):
-    model = User
+class ListUser(TemplateView):
     template_name = 'users/user_list.html'
-    queryset = User.objects.all()
 
     def get(self, request, *args, **kwargs):
         """
         Custom query set to filter type of user
         """
-        return super().get(self, request, *args, **kwargs)
+        context = self.get_context_data(**kwargs)
+        context['total_users'] = User.objects.all().count()
+        return self.render_to_response(context)
+
+
+class UpdateUser(DetailView):
+    template_name = 'users/user.html'
+    pk_url_kwarg = 'pk'
+    queryset = User.objects.all()
