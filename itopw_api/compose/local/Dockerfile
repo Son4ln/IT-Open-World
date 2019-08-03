@@ -26,6 +26,7 @@ RUN apt-get update
 RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 COPY ./compose/local/start /start
+RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 WORKDIR /app
 EXPOSE 9000
