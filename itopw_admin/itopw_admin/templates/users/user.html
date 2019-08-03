@@ -16,8 +16,7 @@
       </h3>
       <span class="kt-subheader__separator kt-subheader__separator--v"></span>
       <div class="kt-subheader__group" id="kt_subheader_search">
-        <span class="kt-subheader__desc" id="kt_subheader_total">
-          {{object.user|default:object.username}} </span>
+        <span class="kt-subheader__desc" id="kt_subheader_total"> {{object.user|default:object.username}} </span>
       </div>
     </div>
     <div class="kt-subheader__toolbar">
@@ -94,19 +93,19 @@
                     <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">First Name</label>
                       <div class="col-lg-9 col-xl-6">
-                        <input class="form-control" type="text" value="Nick">
+                        {{form.first_name}}
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">Last Name</label>
                       <div class="col-lg-9 col-xl-6">
-                        <input class="form-control" type="text" value="Nick">
+                        {{form.last_name}}
                       </div>
                     </div>
                     <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">Full Name</label>
                       <div class="col-lg-9 col-xl-6">
-                        <input class="form-control" type="text" value="Nick">
+                        {{form.name}}
                       </div>
                     </div>
                     <div class="form-group row">
@@ -147,13 +146,31 @@
                     <div class="form-group row">
                       <label class="col-xl-3 col-lg-3 col-form-label">Username</label>
                       <div class="col-lg-9 col-xl-6">
-                        <div class="kt-spinner kt-spinner--sm kt-spinner--success kt-spinner--right kt-spinner--input">
-                          <input class="form-control" type="text" value="nick84">
-                        </div>
+                        <p class="mt-2"><b>{{object.username}}</b></p>
                       </div>
                     </div>
                     <div class="form-group form-group-last row">
                       <label class="col-xl-3 col-lg-3 col-form-label">Communication</label>
+                      <div class="col-lg-9 col-xl-6">
+                        <div class="kt-checkbox-inline">
+                          <label class="kt-checkbox">
+                            <input type="checkbox" checked=""> Email
+                            <span></span>
+                          </label>
+                          <label class="kt-checkbox">
+                            <input type="checkbox" checked=""> SMS
+                            <span></span>
+                          </label>
+                          <label class="kt-checkbox">
+                            <input type="checkbox"> Phone
+                            <span></span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group form-group-last row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">Positions</label>
                       <div class="col-lg-9 col-xl-6">
                         <div class="kt-checkbox-inline">
                           <label class="kt-checkbox">
@@ -179,7 +196,11 @@
                     <div class="form-group row kt-margin-t-10 kt-margin-b-10">
                       <label class="col-xl-3 col-lg-3 col-form-label"></label>
                       <div class="col-lg-9 col-xl-6">
-                        <button type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Deactivate your account ?</button>
+                        {% if object.is_active %}
+                        <button type="button" class="btn btn-label-danger btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Deactivate account ?</button>
+                        {% else %}
+                        <button type="button" class="btn btn-label-info btn-bold btn-sm kt-margin-t-5 kt-margin-b-5">Active account ?</button>
+                        {% endif %}
                       </div>
                     </div>
                   </div>

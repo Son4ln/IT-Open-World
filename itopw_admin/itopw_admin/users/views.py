@@ -1,48 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
-from django.views.generic import DetailView, RedirectView, UpdateView, TemplateView
+from django.views.generic import DetailView, TemplateView, FormView
+from django.shortcuts import get_object_or_404
+
+from itopw_admin.users.forms import SuperUpdateUserForm
 
 User = get_user_model()
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
-
-    model = User
-    slug_field = "username"
-    slug_url_kwarg = "username"
-
-
-user_detail_view = UserDetailView.as_view()
-
-
-class UserUpdateView(LoginRequiredMixin, UpdateView):
-
-    model = User
-    fields = ["name"]
-
-    def get_success_url(self):
-        return reverse("users:detail", kwargs={"username": self.request.user.username})
-
-    def get_object(self):
-        return User.objects.get(username=self.request.user.username)
-
-
-user_update_view = UserUpdateView.as_view()
-
-
-class UserRedirectView(LoginRequiredMixin, RedirectView):
-
-    permanent = False
-
-    def get_redirect_url(self):
-        return reverse("users:detail", kwargs={"username": self.request.user.username})
-
-
-user_redirect_view = UserRedirectView.as_view()
-
-
-class ListUser(TemplateView):
+class ListUser(LoginRequiredMixin, TemplateView):
     template_name = 'users/user_list.html'
 
     def get(self, request, *args, **kwargs):
@@ -54,7 +20,18 @@ class ListUser(TemplateView):
         return self.render_to_response(context)
 
 
-class UpdateUser(DetailView):
+class UpdateUser(LoginRequiredMixin, FormView):
     template_name = 'users/user.html'
-    pk_url_kwarg = 'pk'
-    queryset = User.objects.all()
+    form_class = SuperUpdateUserForm
+
+    def get(self, request, *args, **kwargs):
+        """Handle GET requests: instantiate a blank version of the form."""
+        context = self.get_context_data()
+        context['object'] = get_object_or_404(User, pk=kwargs['pk'])
+        return self.render_to_response(context)
+
+    def get_form(self, form_class=None):
+        """Return an instance of the form to be used in this view."""
+        if form_class is None:
+            form_class = self.get_form_class()
+        return form_class(**self.get_form_kwargs())
