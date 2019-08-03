@@ -125,13 +125,13 @@
         },
         {
           orderable: false,
-          title: '{% trans "Status" %}',
+          title: '{% trans "Active Account" %}',
           data: 'active_verbose',
           render: function (data, type, full, meta) {
             if (full.is_active)
-              return `<button data-id="${full.id}" data-status="0" class="confirm_change btn btn-brand">${data}</button>`;
+              return `<button data-id="${full.id}" data-status="0" class="confirm_change btn btn-warning">Deactive</button>`;
             else
-              return `<button data-id="${full.id}" data-status="1" class="confirm_change btn btn-danger">${data}</button>`;
+              return `<button data-id="${full.id}" data-status="1" class="confirm_change btn btn-info">Active</button>`;
           },
         },
         {
