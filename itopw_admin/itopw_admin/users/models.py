@@ -11,7 +11,7 @@ class User(AbstractUser, BaseModel):
     # around the globe.
     name = CharField(_("Name of User"), blank=True, max_length=255)
     phone = CharField(_("Phone"), blank=True, max_length=20)
-    is_writter = BooleanField(_("Is Writter"), default=False)
+    is_writter = BooleanField(_("Writter"), default=False)
     email_notification = BooleanField(_("Email Notification"), default=False)
     web_notification = BooleanField(_("Website Notification"), default=False)
 
