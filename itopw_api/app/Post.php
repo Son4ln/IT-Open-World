@@ -39,5 +39,5 @@ class Post extends Model
     public function saves()
     {
     	return $this->belongsToMany('App\PostSave');
-    } 
+    }
 }

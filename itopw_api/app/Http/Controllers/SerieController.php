@@ -35,9 +35,13 @@ class SerieController extends Controller
      */
     public function store(Request $request)
     {
-        $serie = Series::create($request->all());
-
-        return response()->json($serie, 'Thêm mới dữ liệu thành công!');
+        $data = slug_convert($request->all());
+        $serie = Series::create($data);
+        return response()->json(
+            [
+                "data" => $serie,
+                "message" => __('messages.created')
+            ], 200);
     }
 
     /**
@@ -71,9 +75,14 @@ class SerieController extends Controller
      */
     public function update(Request $request, Series $serie)
     {
-        $serie->update($request->all());
+        $data = slug_convert($request->all());
+        $serie->update($data);
 
-        return response()->json($serie, 'Sửa dữ liệu thành công!');
+        return response()->json(
+            [
+                "data" => $serie,
+                "message" => __('messages.updated')
+            ], 200);
     }
 
     /**
@@ -87,5 +96,11 @@ class SerieController extends Controller
         $serie->delete();
 
         return response()->json($serie, 'Xóa dữ liệu thành công!');
+    }
+
+    public function slug_convert($data)
+    {
+        $data['slug'] = \Illuminate\Support\Str::slug($data['name'], '-');
+        return $data;
     }
 }
