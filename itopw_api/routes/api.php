@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResources([
+    'series' => 'API\SerieController',
+]);
+
 Route::get('/serie', 'SerieController@index')->name('serie-index');
 Route::get('/serie/{serie}', 'SerieController@show')->name('serie-show');
 Route::post('/serie', 'SerieController@store')->name('serie-store');

@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $table = "posts_post";
-
-    protected $fillable = ['avatar', 'title', 'slug', 'content', 'origin', 'status', 'creator_id', 'last_modified_by_id', 'user_id'];
+    protected $dateFormat = 'Y-m-d H:i:sO';
+    protected $fillable = ['avatar', 'title', 'slug', 'links', 'content', 'origin', 'status', 'creator_id', 'last_modified_by_id', 'user_id'];
 
     protected $casts = [
     	'created_at' => 'datetime',
     	'updated_at' => 'datetime',
-    	// 'deleted_at' => 'datetime',
     ];
 
     public function users()

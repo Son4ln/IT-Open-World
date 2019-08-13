@@ -31,7 +31,7 @@ class Post(SoftDelete ,BaseModel):
     origin = CharField(_("Origin"), null=False, blank=False, max_length=500)
     status = CharField(_("Status"), null=False, max_length=3, choices=STATUS_CHOICES, default=STATUS_1)
     user = ForeignKey(User, related_name="posts", verbose_name=_("Post Owner"), on_delete=CASCADE)
-    series = ForeignKey(Series, related_name="posts", on_delete=CASCADE)
+    series = ForeignKey(Series, related_name="posts", on_delete=CASCADE, null=True)
 
     def __str__(self):
         return self.title

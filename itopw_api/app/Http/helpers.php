@@ -1,7 +1,6 @@
 <?php
-function slug_convert($data)
+function slug_convert($str)
 {
-    $data['slug'] = \Illuminate\Support\Str::slug($data['name'], '-');
-    return $data;
+    return \Illuminate\Support\Str::slug($str, '-');
 }
 ?>
