@@ -10,7 +10,7 @@
     "@zeit/next-sass": "^1.0.1",
     "datatables.net": "^1.10.19",
     "hoist-non-react-statics": "^3.3.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "next": "8.1.0",
     "node-sass": "^4.12.0",
     "react": "16.8.6",
